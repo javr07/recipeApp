@@ -1,3 +1,4 @@
+//This is another way to pass credentials, instead of env.
 module.exports = {
 	HOST: process.env.DB_HOST,
 	USER: process.env.DB_USER,

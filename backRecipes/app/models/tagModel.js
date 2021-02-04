@@ -7,10 +7,9 @@ module.exports = (sequelize) => {
 			unique: true,
 			allowNull: false
 		},
-		about: {
-			type: DataTypes.TEXT
-		}
+		about: DataTypes.TEXT
 	}, {
 		freezeTableName: true
 	});
+	return tag;
 };

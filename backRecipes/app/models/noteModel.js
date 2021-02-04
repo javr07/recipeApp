@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
 	const note = sequelize.define('note', {
@@ -10,11 +10,12 @@ module.exports = (sequelize) => {
 		recipe_id: {
 			type: DataTypes.INTEGER,
 			references: {
-				model: receipe,
+				model: 'recipe',
 				key: 'id'
 			}
 		}
 	},{
 		freezeTableName: true
 	});
+	return note;
 };

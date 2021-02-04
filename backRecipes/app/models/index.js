@@ -14,9 +14,9 @@ const db = {};
 db.sequelize = sequelize;
 db.sequelizeObj = sequelizeObj;
 
-db.recipe = require("./recipeModel.js")(sequelize, sequelizeObj);
-db.note = require("./noteModel.js")(sequelize);
-db.tag = require("./tagModel.js")(sequelize);
+db.recipe = require("./recipeModel.js")(sequelizeObj);
+db.tag = require("./tagModel.js")(sequelizeObj);
+db.note = require("./noteModel.js")(sequelizeObj);
 
 db.recipe.hasMany(db.note, { foreignKey: 'recipe_id', onDelete: 'CASCADE' });
 db.note.belongsTo(db.recipe);

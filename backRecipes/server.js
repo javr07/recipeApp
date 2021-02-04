@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 
+
 const app = express();
 
 var corsOptions = {
@@ -24,9 +25,10 @@ db.sequelizeObj.sync();
 
 // simple route
 app.get("/", (req, res) => {
-	res.json({message: "Welcome Welcome"});
+	res.json({message: "API for GetMYRecipe app"});
 });
 
+require("./app/routes/recipeRoutes")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

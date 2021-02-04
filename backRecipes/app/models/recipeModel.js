@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
-module.exports = (sequelize, sequelizeObj) => {
-	const recipe = sequelize.define("recipe", {
+module.exports = (sequelize) => {
+	const recipe = sequelize.define('recipe', {
 		name: { 
 			type: DataTypes.STRING,
 			allowNull: false
@@ -14,8 +14,9 @@ module.exports = (sequelize, sequelizeObj) => {
 			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
-		offlinedata: type: DataTypes.TEXT
+		offlinedata: DataTypes.TEXT
 	}, {
 		freezeTableName: true
 	}); 
+	return recipe;
 };
