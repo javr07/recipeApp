@@ -11,8 +11,8 @@ exports.create = (req, res) => {
 		name: req.body.name,
 		about: req.body.about
 	};
-	tag.create(tagObj).then(data => {
-		res.send(data);
+	tag.create(tagObj).then(tag => {
+		res.send(tag);
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something went wrong creating tag"
@@ -20,8 +20,8 @@ exports.create = (req, res) => {
 	});
 };
 exports.findAll = (req, res) => {
-	tag.findAll().then(data => {
-		res.send(data);
+	tag.findAll().then(tags => {
+		res.send(tags);
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "None tag?"
@@ -33,8 +33,12 @@ exports.delete = (req, res) => {
 	tag.destroy({
 		where: { id: id }
 	}).then(data => {
-		res.send(data);		
-	}).cath(err => {
+		if (data == 1) {
+			res.send({ message: "OK" });
+		} else {
+			res.send({ message: "Could not delete" });
+		}	
+	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something went wrong deleting tag" 
 		});
@@ -45,7 +49,11 @@ exports.update = (req, res) => {
 	tag.update(req.body, {
 		where: { id: id }
 	}).then(data => {
-		res.send(data);
+		if (data == 1) {
+			res.send({ message: "OK" });
+		} else {
+			res.send({ message: "Could not update" });
+		}
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something went wrong updating tag"

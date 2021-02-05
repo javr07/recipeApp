@@ -17,7 +17,7 @@ exports.create = (req, res) => {
 	var tags, notes = [{}];
 	recipeObj.rate = checkRate(req.body.rate);
 	recipe.create(recipeObj).then(dataRecipe => {
-		//recive text JSON 
+		//receive text JSON 
 		tags = JSON.parse(req.body.tags);
 		notes = JSON.parse(req.body.notes);
 		//save and add relations (for each entity)
@@ -32,15 +32,15 @@ exports.create = (req, res) => {
 };
 function saveNotes(notes, dataRecipe){
 	for (var i = 0; i < notes.length; i++) {
-		db.note.create(notes[0]).then( dataNote => {
-			dataNote.setRecipe(dataRecipe).then( check => {
+		db.note.create(notes[i]).then( note => {
+			note.setRecipe(dataRecipe).then( check => {
 			});
 		});
 	}
 };
 function addTags(tags, dataRecipe){
 	for (var i = 0; i < tags.length; i++) {
-		db.tag.findByPk(tags[0].id).then( tag => {
+		db.tag.findByPk(tags[i].id).then( tag => {
 			tag.setRecipes(dataRecipe);
 		});
 	}
@@ -119,7 +119,6 @@ exports.update = (req, res) => {
 	recipe.update(req.body, {
 		where: { id: id}
 	}).then(data => {
-		console.log(data);
 		if (data == 1) {
 			res.send({ message: "OK" });
 		} else {
@@ -149,7 +148,6 @@ exports.delete = (req, res) => {
 		});
 	});
 };
-//Removes all entries CASCADE?
 exports.deleteAll = (req, res) => {
 	recipe.destroy({
 		where: {},

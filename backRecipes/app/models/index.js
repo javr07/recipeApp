@@ -1,6 +1,6 @@
 const dbConfig = require("../config/dbConfig.js");
 const sequelize = require("sequelize");
-
+//Remember include .env file in root
 const sequelizeObj = new sequelize(process.env.DB_NAME, 
 									process.env.DB_USER, 
 									process.env.DB_PASS, {
