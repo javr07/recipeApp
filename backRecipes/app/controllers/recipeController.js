@@ -14,15 +14,38 @@ exports.create = (req, res) => {
 		source: req.body.source,
 		offlinedata: req.body.source
 	};
+	var tags, notes = [{}];
 	recipeObj.rate = checkRate(req.body.rate);
-	recipe.create(recipeObj).then(data => {
-		res.send(data);
+	recipe.create(recipeObj).then(dataRecipe => {
+		//recive text JSON 
+		tags = JSON.parse(req.body.tags);
+		notes = JSON.parse(req.body.notes);
+		//save and add relations (for each entity)
+		saveNotes(notes, dataRecipe);
+		addTags(tags, dataRecipe);
+		res.send(dataRecipe);
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something bad ocurred while creating recipe record"
 		});
 	});
 };
+function saveNotes(notes, dataRecipe){
+	for (var i = 0; i < notes.length; i++) {
+		db.note.create(notes[0]).then( dataNote => {
+			dataNote.setRecipe(dataRecipe).then( check => {
+			});
+		});
+	}
+};
+function addTags(tags, dataRecipe){
+	for (var i = 0; i < tags.length; i++) {
+		db.tag.findByPk(tags[0].id).then( tag => {
+			tag.setRecipes(dataRecipe);
+		});
+	}
+};
+
 //no used yet
 exports.search = (req, res) => {
 	const name = req.query.name;
@@ -49,22 +72,42 @@ exports.findAll = (req, res) => {
 exports.find = (req, res) => {
 	const id = req.params.id;
 	const recipeObj = {};
-	recipe.findByPk(id).then(data => {
-		recipeObj.data;
-		//Retrive tags froms recipe_tags
-		db.sequelize.recipe_tags.findAll({
-			where: { recipeid: id },
-			include: [{
-				model: tag,
-			}] 
-		}).then(dataTag => {
-			recipeObj.dataTag;
-			res.send(recipeObj);
-		}).catch(err => {
-			res.status(500).send({
-				message: err.message || "Good try, but doesn't work for ternary"
+	recipe.findByPk(id).then(recipeData => {
+		recipeObj.recipe = recipeData;
+		//This is the short way to get tags and notes. However, it must be a promise inside a promise inside a promise.
+		recipeData.getNotes().then(notes => {
+			recipeObj.notes = notes;
+			recipeData.getTags().then(tags => {
+				recipeObj.tags = tags;
+				res.send(recipeObj);	
 			});
 		});
+		//This is the long way to retrieve tags and notes
+		/*
+		db.tag.findAll({
+			where: { id: id },
+			include: db.recipe
+		}).then(tagData => {
+			recipeObj.tag = tagData;
+			//Retrieve notes associated
+			db.note.findAll({
+				where: {
+					recipeId: id
+				}
+			}).then(noteData => {
+				recipeObj.note = noteData;
+				res.send(recipeObj);
+			}).catch(err => {
+				res.status(500).send({
+					message: err.message || "Something wrong getting notes"
+				});
+			});
+		}).catch(err => {
+			res.status(500).send({
+				message: err.message || "Good try, but doesn't work for junction table"
+			});
+		});
+		*/
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something happend with this ID"
@@ -95,7 +138,11 @@ exports.delete = (req, res) => {
 			id: id
 		}
 	}).then(data => {
-		res.send(data);
+		if (data == 1) {
+			res.send({ message: "OK" });
+		} else {
+			res.send({ message: "Could not delete" });
+		}
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something bad ocurred deleting"
@@ -105,9 +152,10 @@ exports.delete = (req, res) => {
 //Removes all entries CASCADE?
 exports.deleteAll = (req, res) => {
 	recipe.destroy({
-		truncate: true
+		where: {},
+		truncate: false
 	}).then(data =>{
-		res.send(data);
+		res.send({ message: `${data} recipes deleted`});
 	}).catch (err =>  {
 		res.status(500).send({
 			message: err.message || "Something bad ocurred deleting all"

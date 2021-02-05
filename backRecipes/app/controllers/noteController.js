@@ -10,7 +10,7 @@ exports.create = (req, res) => {
 	const noteObj = {
 		text: req.body.text,
 		photo: req.body.photo,
-		receipe_id: req.body.receipe_id
+		recipeId: req.body.recipeId
 	};
 	note.create(noteObj).then(data => {
 		res.send(data);
@@ -19,20 +19,6 @@ exports.create = (req, res) => {
 			message: err.message || "Something wrong happend creating note"
 		});
 	});
-};
-//Retrieve notes by receipe
-exports.find = (req, res) => {
-	const receipe_id = req.params.receipe_id;
-	const notes = await note.findAll({
-		where: {
-			receipe_id: receipe_id
-		}
-	}).catch(err => {
-		res.status(500).send({
-			message: err.message || "Something wrong getting notes"
-		});
-	});
-	res.send(notes);
 };
 exports.update = (req, res) => {
 	const id = req.params.id;
@@ -56,8 +42,11 @@ exports.delete = (req, res) => {
 	note.destroy({
 		where: { id: id }
 	}).then(data =>{
-		console.log(data);
-		res.send(data);
+		if (data == 1) {
+			res.send({ message: "OK" });
+		} else {
+			res.send({ message: "Could not delete" });
+		}
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something went wrong deleting note"

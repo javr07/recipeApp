@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-
+//Remember id is set by default
 module.exports = (sequelize) => {
 	const recipe = sequelize.define('recipe', {
 		name: { 

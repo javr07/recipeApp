@@ -13,14 +13,17 @@ const db = {};
 
 db.sequelize = sequelize;
 db.sequelizeObj = sequelizeObj;
-
+//Probably turn off timestamps, these are on by default
 db.recipe = require("./recipeModel.js")(sequelizeObj);
 db.tag = require("./tagModel.js")(sequelizeObj);
 db.note = require("./noteModel.js")(sequelizeObj);
 
-db.recipe.hasMany(db.note, { foreignKey: 'recipe_id', onDelete: 'CASCADE' });
+db.recipe.hasMany(db.note, { foreignKey: 'recipeId', onDelete: 'CASCADE' });
 db.note.belongsTo(db.recipe);
-db.recipe.belongsToMany(db.tag, { through: 'recipe_tags', onDelete: 'CASCADE' });
-db.tag.belongsToMany(db.recipe, { through: 'recipe_tags', onDelete: 'CASCADE' });
+//Define a model for junction table
+db.recipeTags = sequelizeObj.define('recipeTags', {}, { timestamps: false });
+//For m:n relations cascade is default. Set recipeTags as junction table
+db.recipe.belongsToMany(db.tag, { through: 'recipeTags' });
+db.tag.belongsToMany(db.recipe, { through: 'recipeTags' });
 
 module.exports = db;
