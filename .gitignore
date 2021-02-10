@@ -1,2 +1,6 @@
 
 backRecipes/.env
+
+frontRecipes/.env
+
+frontRecipes/node_modules/
