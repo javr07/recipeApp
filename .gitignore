@@ -4,3 +4,5 @@ backRecipes/.env
 frontRecipes/.env
 
 frontRecipes/node_modules/
+
+backRecipes/node_modules/

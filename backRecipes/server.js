@@ -2,8 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
-
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./app/doc/definitions.json";
 
 const app = express();
 
@@ -23,12 +23,15 @@ app.use(bodyParser.urlencoded({ extended: true}));
 const db = require("./app/models");
 db.sequelizeObj.sync();
 
+//Swagger
+app.use("api/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // simple route
 app.get("/", (req, res) => {
 	res.json({message: "API for GetMYRecipe app"});
 });
-
 require("./app/routes/routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -110,7 +110,7 @@ exports.find = (req, res) => {
 		*/
 	}).catch(err => {
 		res.status(500).send({
-			message: err.message || "Something happend with this ID"
+			message: err.message || "Something happened with this ID"
 		});
 	});
 };

@@ -6,15 +6,15 @@ module.exports = (app) => {
 
 	//Missing tag data for create recipe
 	router.post("/recipes/", recipes.create);
-	router.get("/recipes/", recipes.findAll);
+	router.get("/allRecipes/", recipes.findAll);
 	router.put("/recipes/:id", recipes.update);
 	router.get("/recipes/:id", recipes.find);
 	router.delete("/recipes/:id", recipes.delete);
-	router.delete("/recipes/", recipes.deleteAll);
+	router.delete("/allRecipes/", recipes.deleteAll);
 
-	router.post("/notes/", notes.create);
-	router.put("/notes/:id", notes.update);
-	router.delete("/notes/:id", notes.delete);
+	router.post("/note/", notes.create);
+	router.put("/note/:id", notes.update);
+	router.delete("/note/:id", notes.delete);
 
 	router.get("/tags/", tags.findAll);
 	router.put("/tags/:id", tags.update);

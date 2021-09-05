@@ -16,7 +16,7 @@ exports.create = (req, res) => {
 		res.send(data);
 	}).catch (err => {
 		res.status(500).send({
-			message: err.message || "Something wrong happend creating note"
+			message: err.message || "Something wrong happened creating note"
 		});
 	});
 };
