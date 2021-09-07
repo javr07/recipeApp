@@ -24,7 +24,7 @@ const db = require("./app/models");
 db.sequelizeObj.sync();
 
 //Swagger
-app.use("api/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // simple route
 app.get("/", (req, res) => {
