@@ -13,7 +13,7 @@
         "name": "ISC"
       }
     },
-    "basePath": "/v1",
+    "basePath": "/api",
     "tags": [
       {
         "name": "Recipe",
@@ -21,7 +21,7 @@
       },
       {
         "name": "Note",
-        "description": "Add notes to recipes"
+        "description": "CRUD for notes (associated to recipes)"
       },
       {
         "name": "Tag",
@@ -35,7 +35,7 @@
       "/recipe": {
         "post": {
           "tags": [
-            "recipe"
+            "Recipe"
           ],
           "summary": "Add a new recipe",
           "description": "Add a new recipe to your collection. Only Name is required",
@@ -66,7 +66,7 @@
               "in": "formData",
               "description": "Number rate",
               "required": false,
-              "type": "int",
+              "type": "integer",
               "format": "int32"
             },
             {
@@ -102,7 +102,7 @@
         "/recipe/{recipeId}": {
           "put": {
             "tags": [
-              "recipe"
+              "Recipe"
             ],
             "summary": "Update an existing Recipe",
             "description": "",
@@ -134,7 +134,7 @@
                 "in": "formData",
                 "description": "Number rate",
                 "required": false,
-                "type": "int",
+                "type": "integer",
                 "format": "int32"
               }
             ],
@@ -151,7 +151,7 @@
       "/getRecipe/{recipeId}": {
         "get": {
           "tags": [
-            "recipe"
+            "Recipe"
           ],
           "summary": "Find Recipe by id",
           "description": "Find one rRecipe",
@@ -184,7 +184,7 @@
       "/getRecipes": {
         "get": {
           "tags": [
-            "recipe"
+            "Recipe"
           ],
           "summary": "Finds all Recipes",
           "description": "Get all recipes",
@@ -210,7 +210,7 @@
       "/deleteRecipe/{recipeId}": {
         "get": {
           "tags": [
-            "recipe"
+            "Recipe"
           ],
           "summary": "Delete Recipe by id",
           "description": "Delete one Recipe",
@@ -241,7 +241,7 @@
       "/deleteRecipes/": {
         "get": {
           "tags": [
-            "recipe"
+            "Recipe"
           ],
           "summary": "Delete all Recipes",
           "description": "Delete all Recipes",
@@ -262,7 +262,7 @@
       "/note": {
         "post": {
           "tags": [
-            "note"
+            "Note"
           ],
           "summary": "Create a new note associated to a recipe",
           "description": "Create note",
@@ -286,7 +286,7 @@
               "in": "formData",
               "description": "Recipe id",
               "required": true,
-              "type": "int",
+              "type": "integer",
               "format": "int32"
             }
           ],
@@ -308,7 +308,7 @@
       "/note/{noteId}": {
           "put": {
             "tags": [
-              "note"
+              "Note"
             ],
             "summary": "Edit a note associated to a recipe",
             "description": "Edit note",
@@ -332,7 +332,7 @@
                 "in": "path",
                 "description": "Recipe id",
                 "required": true,
-                "type": "int",
+                "type": "integer",
                 "format": "int32"
               }
             ],
@@ -347,7 +347,7 @@
           },
           "delete": {
             "tags": [
-              "note"
+              "Note"
             ],
             "summary": "Delete a note associated to a recipe",
             "description": "Delete note",
@@ -364,7 +364,7 @@
                 "in": "path",
                 "description": "Recipe id",
                 "required": true,
-                "type": "int",
+                "type": "integer",
                 "format": "int32"
               }
             ],
@@ -381,7 +381,7 @@
           "/tag": {
             "post": {
               "tags": [
-                "tag"
+                "Tag"
               ],
               "summary": "Add a new tag",
               "description": "Add a new tag for your collection. Only Name is required",
@@ -428,7 +428,7 @@
           "/tags": {
             "get": {
               "tags": [
-                "tag"
+                "Tag"
               ],
               "summary": "Get all tags",
               "description": "Get all tags",
@@ -454,7 +454,7 @@
           "/tag/{tagId}": {
             "put": {
               "tags": [
-                "tag"
+                "Tag"
               ],
               "summary": "Edit a tag name associated to cero or many recipes",
               "description": "Edit tag",
@@ -478,7 +478,7 @@
                   "in": "path",
                   "description": "Tag id",
                   "required": true,
-                  "type": "int",
+                  "type": "integer",
                   "format": "int32"
                 }
               ],
@@ -493,7 +493,7 @@
             },
             "delete": {
               "tags": [
-                "tag"
+                "Tag"
               ],
               "summary": "Delete a tag associated to cero or many recipes",
               "description": "Delete a tag",
@@ -507,7 +507,7 @@
                   "in": "path",
                   "description": "Tag id",
                   "required": true,
-                  "type": "int",
+                  "type": "integer",
                   "format": "int32"
                 }
               ],
