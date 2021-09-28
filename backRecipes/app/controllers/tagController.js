@@ -1,7 +1,7 @@
-const db = require("../models");
-const tag = db.tag;
+import { tag as _tag } from "../models/index.cjs";
+const tag = _tag;
 
-exports.create = (req, res) => {
+export function create(req, res) {
 	if (!req.body.name) {
 		res.status(400).send({
 			message: "nameless?"
@@ -18,8 +18,8 @@ exports.create = (req, res) => {
 			message: err.message || "Something went wrong creating tag"
 		});
 	});
-};
-exports.findAll = (req, res) => {
+}
+export function findAll(req, res) {
 	tag.findAll().then(tags => {
 		res.send(tags);
 	}).catch(err => {
@@ -27,8 +27,8 @@ exports.findAll = (req, res) => {
 			message: err.message || "None tag?"
 		});
 	});
-};	
-exports.delete = (req, res) => {
+}	
+const _delete = (req, res) => {
 	const id = req.params.id;
 	tag.destroy({
 		where: { id: id }
@@ -37,14 +37,15 @@ exports.delete = (req, res) => {
 			res.send({ message: "OK" });
 		} else {
 			res.send({ message: "Could not delete" });
-		}	
+		}
 	}).catch(err => {
 		res.status(500).send({
-			message: err.message || "Something went wrong deleting tag" 
+			message: err.message || "Something went wrong deleting tag"
 		});
 	});
 };
-exports.update = (req, res) => {
+export { _delete as delete };
+export function update(req, res) {
 	const id = req.params.id;
 	tag.update(req.body, {
 		where: { id: id }
@@ -59,4 +60,4 @@ exports.update = (req, res) => {
 			message: err.message || "Something went wrong updating tag"
 		});
 	});
-};
+}

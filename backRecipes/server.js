@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 //DB
-const db = require("./app/models");
+const db = require("./app/models/index.cjs");
 db.sequelizeObj.sync();
 
 //Swagger

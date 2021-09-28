@@ -1,7 +1,7 @@
-const db = require("../models");
-const note = db.note;
+import { note as _note } from "../models/index.cjs";
+const note = _note;
 
-exports.create = (req, res) => {
+export function create(req, res) {
 	if (!req.body.text) {
 		res.status(400).send({
 			message: "Blank note?"
@@ -19,8 +19,8 @@ exports.create = (req, res) => {
 			message: err.message || "Something wrong happened creating note"
 		});
 	});
-};
-exports.update = (req, res) => {
+}
+export function update(req, res) {
 	const id = req.params.id;
 	note.update(req.body, {
 		where: { id: id }
@@ -36,12 +36,12 @@ exports.update = (req, res) => {
 			message: err.message || "Something went wrong updating note"
 		});
 	});
-};
-exports.delete = (req, res) => {
+}
+const _delete = (req, res) => {
 	const id = req.params.id;
 	note.destroy({
 		where: { id: id }
-	}).then(data =>{
+	}).then(data => {
 		if (data == 1) {
 			res.send({ message: "OK" });
 		} else {
@@ -50,6 +50,7 @@ exports.delete = (req, res) => {
 	}).catch(err => {
 		res.status(500).send({
 			message: err.message || "Something went wrong deleting note"
-		})
+		});
 	});
 };
+export { _delete as delete };

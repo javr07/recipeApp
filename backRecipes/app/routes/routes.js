@@ -9,6 +9,7 @@ module.exports = (app) => {
 	router.get("/getRecipes/", recipes.findAll);
 	router.put("/recipe/:id", recipes.update);
 	router.get("/getRecipe/:id", recipes.find);
+	router.get("/getRecipeData/:id", recipes.findData);
 	router.delete("/deleteRecipes/:id", recipes.delete);
 	router.delete("/deleteRecipes/", recipes.deleteAll);
 
